@@ -1,1 +1,3 @@
 build-notepad-Desktop-Debug/
+sqlite_in_rust/target/
+sqlite_in_rust/.idea/
