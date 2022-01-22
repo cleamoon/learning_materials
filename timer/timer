@@ -1,0 +1,47 @@
+#!/usr/bin/python
+import time
+from plyer import notification
+import tkinter as tk
+
+def anime():
+    time.sleep(0.1)
+
+
+if __name__ == "__main__":
+    mnt = int(input("Input amount of minute you want to time: "))
+    notification.notify(
+        title = "Timer started",
+        message = "Timer started with countdown time " + str(mnt) + " minutes."
+    )
+    for i in range(1, mnt * 60 + 1):
+        time.sleep(1)
+        print(time.strftime('%H:%M:%S', time.gmtime(i)))
+
+    notification.notify(
+        title = "Timer stopped",
+        message = "Time up!",
+    )
+
+    root = tk.Tk()
+    canvas = tk.Canvas(root, width = 600, height = 600, bg="yellow")
+    canvas.pack()
+    rec = canvas.create_rectangle(0, 0, 300, 300, fill="red")
+    root.update()
+    time.sleep(1)
+
+    for _ in range(10):
+        canvas.move(rec, 300, 0)
+        root.update()
+        anime()
+        canvas.move(rec, 0, 300)
+        root.update()
+        anime()
+        canvas.move(rec, -300, 0)
+        root.update()
+        anime()
+        canvas.move(rec, 0, -300)
+        root.update()
+        anime()
+
+    exit(0)
+    
