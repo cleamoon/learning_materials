@@ -47,7 +47,7 @@ public class Wallet {
             return null;
         }
 
-        ArrayList<Transaction> inputs = new ArrayList<TransactionInput>();
+        ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
 
         float total = 0;
         for (Map.Entry<String, TransactionOutput> item : UTXOs.entrySet()) {
@@ -61,7 +61,7 @@ public class Wallet {
         newTransaction.generateSignature(privateKey);
 
         for(TransactionInput input : inputs) {
-            UTXOs.remove(input.TransactionOutputId);
+            UTXOs.remove(input.transactionOutputId);
         }
         return newTransaction;
     }

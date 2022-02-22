@@ -4,8 +4,7 @@ import java.security.*;
 import java.util.ArrayList;
 
 import noobchain.NoobChain;
-import noobchain.TransactionInput;
-import noobchain.TransactionOutput;
+import noobchain.*;
 
 public class Transaction {
     public String transactionId;
@@ -53,7 +52,7 @@ public class Transaction {
 
         // gather transaction inputs (make sure they are unspent)
         for (TransactionInput i : inputs) {
-            i.UTXOs = NoobChain.UTXOs.get(i.TransactionOutputId);
+            i.UTXO = NoobChain.UTXOs.get(i.transactionOutputId);
         }
 
         // check if transaction is valid
@@ -85,9 +84,20 @@ public class Transaction {
     // returns sum of inputs(UTXOs) values
     public float getInputsValue() {
         float total = 0;
+        for(TransactionInput i : inputs) {
+            if (i.UTXO == null) continue;
+            total += i.UTXO.value;
+        }
+        return total;
+    }
+
+    public float getOutputsValue() {
+        float total = 0;
         for (TransactionOutput o : outputs) {
             total += o.value;
         }
         return total;
     }
+
+
 }

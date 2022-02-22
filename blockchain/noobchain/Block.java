@@ -1,6 +1,8 @@
 package noobchain;
 
 import java.util.Date;
+import java.util.ArrayList;
+
 
 public class Block {
 	public String hash;
@@ -11,7 +13,7 @@ public class Block {
 	private int nonce;
 
 	// Block Constructor
-	public Block(String data, String previousHash) {
+	public Block(String previousHash) {
 		this.previousHash = previousHash;
 		this.timeStamp = new Date().getTime();
 		this.hash = calculateHash();
@@ -29,7 +31,7 @@ public class Block {
 
 	public void mineBlock(int difficulty) {
 		merkleRoot = StringUtil.getMerkleRoot(transactions);
-		String target = StringUtil.getDifficultyString(difficulty);
+		String target = new String(new char[difficulty]).replace('\0', '0'); 
 		while (!hash.substring(0, difficulty).equals(target)) {
 			nonce++;
 			hash = calculateHash();
@@ -39,7 +41,7 @@ public class Block {
 
 	public boolean addTransaction(Transaction transaction) {
 		if (transaction == null) return false;
-		if (previousHash != 0) {
+		if (previousHash != "0") {
 			if (transaction.processTransaction() != true) {
 				System.out.println("Transaction failed to process. Discarded.");
 				return false;
